@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\24.两两交换链表中的节点.js"
+      "program": "${workspaceFolder}\\25.k-个一组翻转链表.js"
     }
   ]
 }
