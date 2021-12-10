@@ -68,14 +68,16 @@ var findSubstring = function (s, words) {
   const allComb = getAllCombination(words);
   const ret = [];
   allComb.forEach(item => {
-    let reg = new RegExp(item, 'g');
-    while ((result = reg.exec(s)) != null) {
-      const index = result.index;
-      if (index !== -1 && ret.indexOf(index) == -1) {
-        ret.push(index)
-      };
+    let i = 0;
+    const len = item.length;
+    while (i < s.length - len + 1) {
+      if (s.slice(i, i + len) === item) {
+        if (ret.indexOf(i) === -1) {
+          ret.push(i);
+        }
+      }
+      i++;
     }
-    
   })
   return ret;
 };
@@ -98,7 +100,7 @@ const getAllCombination = (words) => {
 */
 
 const main = () => {
-  console.log(findSubstring("foobarfoobar", ["foo","bar"]));
+  console.log(findSubstring("foobarfoobar", ["foo", "bar"]));
 }
 main();
 
