@@ -64,34 +64,42 @@
  * @return {number[]}
  */
 var findSubstring = function (s, words) {
-  if (s.length < 0) return [];
-  const allComb = getAllCombination(words);
-  const ret = [];
-  allComb.forEach(item => {
-    let i = 0;
-    const len = item.length;
-    while (i < s.length - len + 1) {
-      if (s.slice(i, i + len) === item) {
-        if (ret.indexOf(i) === -1) {
-          ret.push(i);
-        }
-      }
-      i++;
-    }
-  })
-  return ret;
-};
-const getAllCombination = (words) => {
-  const len = words.length;
-  if (len === 1) return words;
-  const result = [];
-  for (let i = 0; i < len; i++) {
-    let copy = [...words];
-    copy.splice(i, 1);
-    const temp = getAllCombination(copy).map(item => words[i] + item);
-    result.push(...temp);
+  let res = [];
+
+  let wordLength = words[0].length;
+  let wordCount = words.length;
+  let len = wordCount * wordLength; //Length of sliding window
+
+  let map = {}
+
+  for (let word of words) map[word] = map[word] + 1 || 1; //Hash word freq
+
+  for (let i = 0; i < s.length - len + 1; i++) {
+    let sub = s.slice(i, i + len); //Generate substring of sliding window length
+    if (isConcat(sub, map, wordLength)) res.push(i)
   }
-  return result;
+
+  return res;
+};
+
+/**
+ * sub是否用完map中的word
+ * @param {*} sub 
+ * @param {*} map 
+ * @param {*} wordLength 
+ * @returns 
+ */
+function isConcat(sub, map, wordLength) {
+  let seen = {};
+  for (let i = 0; i < sub.length; i += wordLength) {
+    let word = sub.slice(i, i + wordLength);
+    seen[word] = seen[word] + 1 || 1
+  }
+
+  for (let key in map) {
+    if (map[key] !== seen[key]) return false; //Word freq must match between map and seen
+  }
+  return true;
 }
 // @lc code=end
 /* 
