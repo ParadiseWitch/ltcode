@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\32.最长有效括号.js"
+      "program": "${workspaceFolder}/32.最长有效括号.js"
     }
   ]
 }

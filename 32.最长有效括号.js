@@ -65,43 +65,20 @@
  * @return {number}
  */
 var longestValidParentheses = function (s) {
-  const n = s.length;
-  let ant = 0;
-  let i = 0;
-  while (i <= n-1) {
-    let j = i + 1;
-    while (j <= n - 1) {
-      if (isValid(s.substring(i, j + 1))) {
-        ant = Math.max(ant, j - i + 1);
+  let dp = [0];
+  let max = 0;
+  for (let i = 1; i < s.length; i++) {
+    if (s[i] == ")") {
+      if (s[i - 1] == "(") {
+        dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
       }
-      j++;
-    }
-    i++;
-  }
-  return ant;
-
-};
-var isValid = function (s) {
-  const n = s.length;
-  if (n % 2 === 1) {
-    return false;
-  }
-  const pairs = new Map([
-    [')', '(']
-  ]);
-  const stk = [];
-  for (let ch of s) {
-    if (pairs.has(ch)) {
-      if (!stk.length || stk[stk.length - 1] !== pairs.get(ch)) {
-        return false;
+      else if (i - dp[i - 1] > 0 && s[i - dp[i - 1] - 1] == "(") {
+        dp[i] = dp[i - 1] + 2 + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0);
       }
-      stk.pop();
+      max = Math.max(max, dp[i]);
     }
-    else {
-      stk.push(ch);
-    }
-  };
-  return !stk.length;
+  }
+  return max;
 };
 // @lc code=end
 
