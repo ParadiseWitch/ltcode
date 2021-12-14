@@ -57,7 +57,7 @@
 
 /**
  * ❌ 暴力解法会超时 
- * ❓ 使用DP解法
+ * ✔ 使用DP解法
  */
 // @lc code=start
 /**
@@ -65,7 +65,7 @@
  * @return {number}
  */
 var longestValidParentheses = function (s) {
-  let dp = [0];
+  let dp = Array(s.length).fill(0);
   let max = 0;
   for (let i = 1; i < s.length; i++) {
     if (s[i] == ")") {
