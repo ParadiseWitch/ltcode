@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/1576.替换所有的问号.js"
+      "program": "${workspaceFolder}/89.格雷编码.js"
     }
   ]
 }
