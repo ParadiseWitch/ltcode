@@ -64,14 +64,8 @@
  * @return {number}
  */
 var numberOfMatches = function (n) {
-  // 当前晋级队伍数
-  let p = n;
-  let cnt = 0;
-  while (p > 1) {
-    cnt += parseInt(p / 2);
-    p = (p % 2 == 1) ? parseInt(p / 2) + 1 : parseInt(p / 2);
-  }
-  return cnt;
+  // 每场比赛淘汰一支队伍，最终只有一个队伍没有被淘汰，一共需要淘滩 n - 1 个队伍，需要进行 n - 1 次比赛
+  return n - 1;
 };
 // @lc code=end
 const main = () => { 
