@@ -72,15 +72,11 @@
  * @return {number}
  */
 var countKDifference = function (nums, k) {
-  let res = 0;
-  for (let i = 0; i < nums.length; i++) {
-    const n1 = nums[i];
-    for (let j = i+1; j < nums.length; j++) {
-      const n2 = nums[j];
-      if(Math.abs(n1-n2) === k){
-        res++;
-      }
-    }
+  let res = 0, n = nums.length;
+  const cnt = new Map();
+  for (let j = 0; j < n; ++j) {
+    res += (cnt.get(nums[j] - k) || 0) + (cnt.get(nums[j] + k) || 0);
+    cnt.set(nums[j], (cnt.get(nums[j]) || 0) + 1);
   }
   return res;
 };
