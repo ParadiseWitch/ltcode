@@ -98,7 +98,6 @@ function reverse(arr, index) {
     l++;
     r--;
   }
-  return arr;
 }
 // @lc code=end
 const main = () => {
