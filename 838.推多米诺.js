@@ -65,34 +65,44 @@
  * @return {string}
  */
 var pushDominoes = function (dominoes) {
-  const n = dominoes.length;
-  let [l, r] = [0, 0];
-  let arr = `L${dominoes}R`.split('');
-  while (l < arr.length-1) { 
-    while (arr[r] === '.') {
-      r++;
+  const arr = dominoes.split('');
+  let q = [];
+  // 初始化队列内容
+  for (let [index, value] of arr.entries()) { //已知数组的受力情况的牌
+    if (value !== '.') {
+      q.push({ force: value, index: index }) //需要记录索引，方便下面一起改变数组
     }
-    if (arr[l] === arr[r]) { 
-      const lstatus = arr[l];
-      while (l < r) { 
-        arr[l] = lstatus;
-        l++;
-      }
-    }
-     if (arr[l] === 'R' && arr[r] === "L") { 
-      for (let i = 1; i <= (r - l - 1) / 2; i++) {
-        arr[l + i] = 'R';
-        arr[r - i] = 'L';
-      }
-    }
-    l = r++;
   }
-  return arr.slice(1, arr.length - 1).join('');
+  while (q.length) {  //多源bfs 新一轮多个牌所有的推倒情况
+    const temp = []; //记录这轮所有新的状态改变的牌
+    //每个牌的情况
+    while (q.length) {
+      const card = q.pop();
+      const { force, index } = card; //出队
+      if (force === 'L') { //如果上一张牌为.并且当时上上一张牌不是R的时候，可推倒
+        if (arr[index - 1] === '.' && arr[index - 2] !== 'R') {
+          temp.push({ force: 'L', index: index - 1 });
+        }
+      }
+      if (force === 'R') {
+        if (arr[index + 1] === '.' && arr[index + 2] !== 'L') {
+          temp.push({ force: 'R', index: index + 1 });
+        }
+      }
+    }
+    //如果边推倒边赋值，R..L的情况，可能RR.L而不是RRLL，但其实左右是同时倒下的，并没有中间一张受力两面的情况
+    //所以需要记录后，一起赋值
+    for (const value of temp) {
+      arr[value.index] = value.force;  //该轮推倒的赋值
+    }
+    q = temp; //入队新推倒的牌
+  }
+  return arr.join('');
 };
 // @lc code=end
 
-const main = () => { 
-
+const main = () => {
+  console.log(pushDominoes(".L.R...LR..L.."));
   console.log(pushDominoes(".L.R."));
 }
 main()
