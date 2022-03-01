@@ -10,6 +10,7 @@
  * @return {number}
  */
 var eraseOverlapIntervals = function (intervals) {
+  // 贪心：优先保留结尾小且不相交的区间。
   let ans = 0;
   intervals.sort((a, b) => a[1] - b[1]);
   let prev = intervals[0][1];
