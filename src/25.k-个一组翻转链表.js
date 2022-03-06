@@ -118,7 +118,7 @@ const reverse = (head, tail) => {
 }
 // @lc code=end
 
-const ListNode = require('./utils/listNode');
+const ListNode = require('./utils/ListNode');
 const main = () => {
 
   // const head = ListNode.fromArray(...[1, 2, 3, 4, 5]);
