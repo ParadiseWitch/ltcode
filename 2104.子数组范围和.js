@@ -47,8 +47,3 @@ var subArrayRanges = function (nums) {
   return sumMax - sumMin;
 };
 // @lc code=end
-
-const main = ()=>{
-  console.log(subArrayRanges([1,2,3]));
-}
-main();
