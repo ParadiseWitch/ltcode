@@ -1,0 +1,22 @@
+{
+  "name": "ltcode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1020.飞地的数量.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ParadiseWitch/ltcode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ParadiseWitch/ltcode/issues"
+  },
+  "homepage": "https://github.com/ParadiseWitch/ltcode#readme",
+  "dependencies": {
+    "husky": "^7.0.4"
+  }
+}
