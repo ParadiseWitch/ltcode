@@ -10,25 +10,25 @@
  * @return {number}
  */
 var countMaxOrSubsets = function (nums) {
-  const n = nums.length;
   let max = 0;
   let cnt = 0;
 
-  for (let i = 0; i < 1 << n; i++) {
-    let val = 0;
-    for (let j = 0; j < n; j++) {
-      if (i >> j & 1 == 1){
-        val |= nums[j];
+  const dfs = (pos, val) => {
+    if (pos === nums.length) {
+      if (max < val) {
+        max = val;
+        cnt = 1;
+      } else if (max === val) {
+        cnt++;
       }
+      return;
     }
-    if(val > max){
-      max = val;
-      cnt = 1;
-    } else if(val === max){
-      cnt++;
-    }
+    dfs(pos + 1, val | nums[pos]);
+    dfs(pos + 1, val);
   }
-  return cnt;
+
+  dfs(0, 0);
+  return cnt
 };
 // @lc code=end
 
