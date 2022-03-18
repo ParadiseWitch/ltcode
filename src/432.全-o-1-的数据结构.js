@@ -65,47 +65,103 @@
 
 // @lc code=start
 
-var AllOne = function() {
-  this.map = new Map();
+var AllOne = function () {
+  this.root = new Node();
+  this.root.prev = this.root;
+  this.root.next = this.root;
+  this.nodes = new Map();
 };
 
-AllOne.prototype.inc = function(key) {
-  this.map.set(key, this.map.get(key) + 1 || 1);
+AllOne.prototype.inc = function (key) {
+  if (this.nodes.has(key)) {
+    const cur = this.nodes.get(key);
+    const nxt = cur.next;
+    if (nxt === this.root || nxt.cnt > cur.cnt + 1) {
+      this.nodes.set(key, cur.insert(new Node(key, cur.cnt + 1)));
+    } else {
+      nxt.keys.add(key);
+      this.nodes.set(key, nxt);
+    }
+    cur.keys.delete(key);
+    if (cur.keys.size === 0) {
+      cur.remove();
+    }
+  } else {  // key 不在链表中
+    if (this.root.next === this.root || this.root.next.cnt > 1) {
+      this.nodes.set(key, this.root.insert(new Node(key, 1)));
+    } else {
+      this.root.next.keys.add(key);
+      this.nodes.set(key, this.root.next);
+    }
+  }
 };
 
-AllOne.prototype.dec = function(key) {
-  let val = this.map.get(key);
-  if (val === 1) {
-    this.map.delete(key);
+
+AllOne.prototype.dec = function (key) {
+  const cur = this.nodes.get(key);
+  if (cur.cnt === 1) {
+    // cur.remove();
+    this.nodes.delete(key)
   } else { 
-    this.map.set(key, val - 1);
+    const pre = cur.prev;
+    if (pre === this.root || pre.cnt < cur.cnt - 1) {
+      this.nodes.set(key, pre.insert(new Node(key, cur.cnt - 1)));
+    } else { 
+      pre.keys.add(key);
+      this.nodes.set(key, pre);
+    }
+  }
+  cur.keys.delete(key, this.root);
+  if (cur.keys.size == 0) {
+    cur.remove();
   }
 };
 
 AllOne.prototype.getMaxKey = function () {
-  let max = -1;
-  let maxKey = '';
-  this.map.forEach((val, key) => { 
-    if (val > max) {
-      max = val;
-      maxKey = key;
-    }
-  })
+  if (!this.root.prev) {
+    return "";
+  }
+  let maxKey = "";
+  for (const key of this.root.prev.keys) {
+    maxKey = key;
+    break;
+  }
   return maxKey;
 };
 
-
-AllOne.prototype.getMinKey = function() {
-  let min = Infinity;
-  let minKey = '';
-  this.map.forEach((val, key) => { 
-    if (val < min) {
-      min = val;
-      minKey = key;
-    }  
-  })
+AllOne.prototype.getMinKey = function () {
+  if (!this.root.next) {
+    return "";
+  }
+  let minKey = "";
+  for (const key of this.root.next.keys) {
+    minKey = key;
+    break;
+  }
   return minKey;
 };
+
+
+class Node {
+  constructor(key, cnt) {
+    this.cnt = cnt ? cnt : 0;
+    this.keys = new Set();
+    this.keys.add(key ? key : '');
+  }
+
+  insert(node) { 
+    node.prev = this;
+    node.next = this.next;
+    node.prev.next = node;
+    node.next.prev = node;
+    return node;
+  }
+
+  remove() { 
+    this.prev.next = this.next;
+    this.next.prev = this.prev;
+  }
+}
 
 /**
  * Your AllOne object will be instantiated and called as such:
@@ -116,7 +172,7 @@ AllOne.prototype.getMinKey = function() {
  * var param_4 = obj.getMinKey()
  */
 // @lc code=end
-const main = () => { 
+const main = () => {
   const allOne = new AllOne();
   allOne.inc('hello');
   allOne.inc('hello');
