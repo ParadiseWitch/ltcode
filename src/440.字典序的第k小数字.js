@@ -51,13 +51,13 @@
 var findKthNumber = function (n, k) {
   let curr = 1;
   k--;
-  while (k > 0) {
-    const steps = getSteps(curr, n);
-    if (steps <= k) {
-      k -= steps;
+  while(k > 0){
+    const step = getSteps(curr, n)
+    if(k >= getSteps(curr, n)){
       curr++;
-    } else {
-      curr = curr * 10;
+      k -= step;
+    } else{
+      curr *= 10;
       k--;
     }
   }
@@ -65,15 +65,23 @@ var findKthNumber = function (n, k) {
 }
 
 const getSteps = (curr, n) => {
-  let steps = 0;
-  let first = curr;
-  let last = curr;
-  while (first <= n) {
-    steps += Math.min(last, n) - first + 1;
-    first = first * 10;
-    last = last * 10 + 9;
+  let step = 0;
+  let start = curr;
+  let end = curr;
+  while(n >= start){
+    if(n >= end){
+      step += end - start + 1;  
+    }else{
+      step += n - start + 1;
+    }
+    start *= 10;
+    end = end * 10 + 9; 
   }
-  return steps;
+  return step;
 };
 // @lc code=end
 
+const main = () => {
+  console.log(findKthNumber(4289384, 1922239));
+}
+main()
