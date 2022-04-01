@@ -64,7 +64,7 @@ var selfDividingNumbers = function (left, right) {
   }
   return res;
 };
-const isDividingNumbers = num => { 309
+const isDividingNumbers = num => { 
   let temp = num;
   while (temp > 0) { 
     const digit = temp % 10;
