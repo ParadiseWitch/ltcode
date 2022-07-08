@@ -14,7 +14,7 @@ var evaluate = function (expression) {
   let start = 0;
 
   const innerEvaluate = (expression) => {
-    if (expression[start] !== '(') { // 非表达式，可能为：整数或变量
+    if (expression[start] !== '(') { // 非f表达式，可能为：整数或变量
       if (isLowerCase(expression[start])) {
         const v = parseVar(expression); // 变量
         const n = scope.get(v).length;
