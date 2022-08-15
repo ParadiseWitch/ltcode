@@ -9,8 +9,8 @@
  * @param {number} k
  */
 var MyCircularDeque = function (k) {
-    this.q = new Array(k + 1).fill(0);
-    this.cap = k + 1;
+    this.elements = new Array(k + 1).fill(0);
+    this.capacity = k + 1;
     this.front = this.rear = 0;
 };
 
@@ -22,8 +22,8 @@ MyCircularDeque.prototype.insertFront = function (value) {
     if (this.isFull()) {
         return false;
     }
-    this.front = (this.front - 1 + this.cap) % this.cap;
-    this.q[this.front] = value;
+    this.front = (this.front - 1 + this.capacity) % this.capacity;
+    this.elements[this.front] = value;
     return true;
 };
 
@@ -35,8 +35,8 @@ MyCircularDeque.prototype.insertLast = function (value) {
     if (this.isFull()) {
         return false;
     }
-    this.q[this.rear] = value;
-    this.rear = (this.rear + 1) % this.cap;
+    this.elements[this.rear] = value;
+    this.rear = (this.rear + 1) % this.capacity;
     return true;
 };
 
@@ -47,7 +47,7 @@ MyCircularDeque.prototype.deleteFront = function () {
     if(this.isEmpty()){
         return false;
     }
-    this.front = (this.front + 1) % this.cap;
+    this.front = (this.front + 1) % this.capacity;
     return true;
 };
 
@@ -58,7 +58,7 @@ MyCircularDeque.prototype.deleteLast = function () {
     if (this.isEmpty()) {
         return false;
     }
-    this.rear = (this.rear - 1 + this.cap) % this.cap;
+    this.rear = (this.rear - 1 + this.capacity) % this.capacity;
     return true;
 };
 
@@ -67,7 +67,7 @@ MyCircularDeque.prototype.deleteLast = function () {
  */
 MyCircularDeque.prototype.getFront = function () {
     if(this.isEmpty()) return -1
-    return this.q[this.front];
+    return this.elements[this.front];
 };
 
 /**
@@ -75,7 +75,7 @@ MyCircularDeque.prototype.getFront = function () {
  */
 MyCircularDeque.prototype.getRear = function () {
     if (this.isEmpty()) return -1
-    return this.q[(this.rear + this.cap - 1) % this.cap]
+    return this.elements[(this.rear + this.capacity - 1) % this.capacity]
 };
 
 /**
@@ -89,7 +89,7 @@ MyCircularDeque.prototype.isEmpty = function () {
  * @return {boolean}
  */
 MyCircularDeque.prototype.isFull = function () {
-    return (this.rear + 1) % this.cap === this.front
+    return (this.rear + 1) % this.capacity === this.front
 };
 
 /**
