@@ -17,19 +17,18 @@
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  const nodes = []
-  let node = head
-  while (node) {
-    nodes.push(node)
-    node = node.next
-  };
-  for (let i = nodes.length - 1; i >= 0; i--) {
-    nodes[i].next = nodes[i - 1]
+  // write code here
+  if (head == null) return null;
+  let prev = null;
+  let cur = head;
+  while (cur != null) {
+    // 反转
+    let next = cur.next;
+    cur.next = prev;
+    prev = cur;
+    cur = next;
   }
-  if (nodes.length > 0) {
-    nodes[0].next = null
-  }
-  return nodes[nodes.length - 1] || null
+  return prev;
 }
 // @lc code=end
 
