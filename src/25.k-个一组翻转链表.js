@@ -84,37 +84,53 @@
  * @return {ListNode}
  */
 var reverseKGroup = function (head, k) {
-  const hair = new ListNode(0, head);
-  let pre = hair;
-  // let cur = head;
+  // TODO 待整理
+  let vNode = new ListNode(-1);
+  vNode.next = head;
 
-  // if (!head || k <= 1) return head;
-  let tail = pre;
-  let count = 0;
-  while (count < k && tail.next) {
-    tail = tail.next;
-    count++;
+  let start = vNode;
+  let left = vNode.next;
+  let right = null;
+  let end = null;
+  let pos = 0;
+  while (true) {
+    right = getKEnd(left, k)
+    if (right == null) return vNode.next;
+    end = right.next;
+    // 断开连接
+    start.next = null;
+    right.next = null;
+    // 反转链表
+    reverse(left);
+    // 反向连接
+    start.next = right;
+    left.next = end;
+    // 连接下一个
+    start = left;
+    left = start.next;
+    pos = 0;
   }
-  if (count !== k) return hair.next;
-  let [nh, nt] = reverse(head, tail);
-  nt.next = reverseKGroup(nt.next, k);
-  return nh;
+}
 
-};
+const getKEnd = (head, k) => {
+  while (head && k > 1) {
+    head = head.next;
+    k--;
+  }
+  return head;
+}
 
-const reverse = (head, tail) => {
-  if(!head || !tail) return [head, tail];
-  let pre = tail.next;
+const reverse = (head) => {
+  if (head == null) return null;
+
+  let pre = null;
   let cur = head;
-  let end = tail.next
-  while (cur !== end) {
+  while (cur !== null) {
     let next = cur.next;
     cur.next = pre;
     pre = cur;
     cur = next;
   }
-  return [tail, head];
-
 }
 // @lc code=end
 
@@ -126,4 +142,4 @@ const main = () => {
 
   reverseKGroup(ListNode.fromArray(...[1, 2, 3, 4, 5]), 2).print();
 }
-main()
+main();
