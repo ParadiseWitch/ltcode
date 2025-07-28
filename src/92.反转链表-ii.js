@@ -64,6 +64,8 @@ var reverseList = function (head) {
   }
   return prev;
 }
+
+// TODO 解法2
 // @lc code=end
 
 const ListNode = require('./utils/ListNode.js');
