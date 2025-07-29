@@ -93,7 +93,7 @@ var reverseKGroup = function (head, k) {
   let right = null;
   let end = null;
   let pos = 0;
-  while (true) {
+  while (left != null) {
     right = getKEnd(left, k)
     if (right == null) return vNode.next;
     end = right.next;
@@ -110,6 +110,7 @@ var reverseKGroup = function (head, k) {
     left = start.next;
     pos = 0;
   }
+  return vNode.next;
 }
 
 const getKEnd = (head, k) => {
