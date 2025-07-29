@@ -63,7 +63,8 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
-var mergeTwoLists = function (list1, list2) {
+// 解法1: 迭代
+var mergeTwoLists1 = function (list1, list2) {
   const vNode = new ListNode(-1);
   let mergeList = vNode;
   while (list1 && list2) {
@@ -88,6 +89,19 @@ var mergeTwoLists = function (list1, list2) {
     return vNode.next;
   }
 };
+
+// 解法2: 递归
+var mergeTwoLists = function (list1, list2) {
+  if (list1 === null) return list2;
+  if (list2 === null) return list1;
+  if (list1.val <= list2.val) {
+    list1.next = mergeTwoLists(list1.next, list2);
+    return list1;
+  } else {
+    list2.next = mergeTwoLists(list1, list2.next);
+    return list2;
+  }
+}
 // @lc code=end
 
 /**
