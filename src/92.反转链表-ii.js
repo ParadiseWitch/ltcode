@@ -70,21 +70,20 @@ var reverseList = function (head) {
 var reverseBetween = function (head, left, right) {
   const dummyNode = new ListNode(-1);
   dummyNode.next = head;
-  let cur = dummyNode;
+  let start = dummyNode;
   let pos = 0;
+  // 找到 left 的前一个节点
   while (pos < left - 1) {
-    cur = cur.next;
+    start = start.next;
     pos++;
   }
-  let start = cur;
-  cur = cur.next;
-  let next = cur.next;
+  let cur = start.next;
   pos++;
-  while (pos < right ) {
+  while (pos < right) {
+    let next = cur.next;
     cur.next = next.next;
     next.next = start.next;
     start.next = next;
-    next = cur.next;
     pos++;
   }
   return dummyNode.next;
