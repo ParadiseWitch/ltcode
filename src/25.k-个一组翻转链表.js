@@ -92,7 +92,6 @@ var reverseKGroup = function (head, k) {
   let left = vNode.next;
   let right = null;
   let end = null;
-  let pos = 0;
   while (left != null) {
     right = getKEnd(left, k)
     if (right == null) return vNode.next;
@@ -108,7 +107,6 @@ var reverseKGroup = function (head, k) {
     // 连接下一个
     start = left;
     left = start.next;
-    pos = 0;
   }
   return vNode.next;
 }
