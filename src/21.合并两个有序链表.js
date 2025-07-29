@@ -64,14 +64,28 @@
  * @return {ListNode}
  */
 var mergeTwoLists = function (list1, list2) {
-  if (list1 == null) return list2;
-  if (list2 == null) return list1;
-  if (list1.val < list2.val) {
-    list1.next = mergeTwoLists(list1.next, list2);
-    return list1;
-  } else {
-    list2.next = mergeTwoLists(list1, list2.next);
-    return list2;
+  const vNode = new ListNode(-1);
+  let mergeList = vNode;
+  while (list1 && list2) {
+    // 比较当前两个链表的节点,谁小取谁
+    // 同时小的移动到下一个节点
+    if (list1.val > list2.val) {
+      mergeList.next = list2;
+      list2 = list2.next;
+    } else {
+      mergeList.next = list1;
+      list1 = list1.next;
+    }
+    mergeList = mergeList.next;
+  }
+  // 如果其中一个链表当前节点为null,则直接将另一个链表的剩余部分接到结果链表上
+  if (!list1) {
+    mergeList.next = list2;
+    return vNode.next;
+  }
+  if (!list2) {
+    mergeList.next = list1;
+    return vNode.next;
   }
 };
 // @lc code=end
