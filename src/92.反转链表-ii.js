@@ -70,20 +70,21 @@ var reverseList = function (head) {
 var reverseBetween = function (head, left, right) {
   const dummyNode = new ListNode(-1);
   dummyNode.next = head;
-  let pre = dummyNode;
+  let cur = dummyNode;
   let pos = 0;
   while (pos < left - 1) {
-    pre = pre.next;
+    cur = cur.next;
     pos++;
   }
-  let start = pre.next;
-  let then = start.next;
+  let start = cur;
+  cur = cur.next;
+  let next = cur.next;
   pos++;
   while (pos < right ) {
-    start.next = then.next;
-    then.next = pre.next;
-    pre.next = then;
-    then = start.next;
+    cur.next = next.next;
+    next.next = start.next;
+    start.next = next;
+    next = cur.next;
     pos++;
   }
   return dummyNode.next;
