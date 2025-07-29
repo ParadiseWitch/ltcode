@@ -72,15 +72,19 @@
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-var mergeKLists = function(lists) {
+var mergeKLists = function (lists) {
   if (lists.length === 0) return null;
-  let result = lists[0];
+  if (lists.length === 1) return lists[0];
+  if (lists.length === 2) return mergeTwoLists(lists[0], lists[1]);
+
+  let mergeList = lists[0];
   for (let i = 1; i < lists.length; i++) {
-    result = mergeTwoLists(result, lists[i]);
+    const list = lists[i];
+    mergeList = mergeTwoLists(mergeList, list);
   }
-  return result;
+  return mergeList;
 };
-var mergeTwoLists = function(l1, l2) {
+var mergeTwoLists = function (l1, l2) {
   if (l1 == null) return l2;
   if (l2 == null) return l1;
   if (l1.val < l2.val) {
