@@ -18,7 +18,8 @@
  * @param {number} right
  * @return {ListNode}
  */
-var reverseBetween = function (head, left, right) {
+// 解法一
+var reverseBetween1 = function (head, left, right) {
   const dummyNode = new ListNode(-1);
   dummyNode.next = head;
 
@@ -66,6 +67,28 @@ var reverseList = function (head) {
 }
 
 // TODO 解法2
+var reverseBetween = function (head, left, right) {
+  const dummyNode = new ListNode(-1);
+  dummyNode.next = head;
+  let pre = dummyNode;
+  let pos = 0;
+  while (pos < left - 1) {
+    pre = pre.next;
+    pos++;
+  }
+  let start = pre.next;
+  let then = start.next;
+  pos++;
+  while (pos < right ) {
+    start.next = then.next;
+    then.next = pre.next;
+    pre.next = then;
+    then = start.next;
+    pos++;
+  }
+  return dummyNode.next;
+}
+
 // @lc code=end
 
 const ListNode = require('./utils/ListNode.js');
