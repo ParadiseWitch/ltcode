@@ -20,15 +20,14 @@
 var hasCycle = function (head) {
   if (head == null) return false;
   if (head.next == null) return false;
-  let f = head.next;
-  let l = head;
-  while (l != null && f != null && f.next != null) {
-    if (f == l) return true;
+  let f = head.next.next;
+  let l = head.next;
+  while (f != l) {
+    if (f == null || f.next == null) return false;
     f = f.next.next;
     l = l.next;
   }
-  return false
-
+  return true
 };
 // @lc code=end
 
